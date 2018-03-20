@@ -1,0 +1,214 @@
+<script src="https://unpkg.com/vue"></script>
+
+<style>
+	* {
+		font-size:45px;
+	}
+	body {
+		background: #6666ff;
+		margin: 0;
+		padding: 0;
+	}
+	#app {
+		display: grid;
+		grid-template-rows: repeat(5, 20%);
+		height: 100%;
+	}
+	.questions {
+		display: grid;
+		grid-template-columns: repeat(5, 20%);
+		grid-template-rows: 100%;
+	}
+	.row {
+		display: grid;
+		grid-template-columns: 20% 80%;
+	}
+	ul {
+	    padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+	.question .opened-true .full-screen-question{
+		display: block;
+	}
+	.question .opened-false .full-screen-question{
+		display: none;
+	}
+	.question .opened-true .price{
+		display: none;
+	}
+	.question .opened-false .price{
+		display: block;
+	}
+	.full-screen-question {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background: #6666ff;;
+		top: 0;
+		left: 0;
+		text-align: center;
+		padding-top: 30%;
+	}
+	.question { 
+		border: 1px solid yellow;
+		font-family: arial;
+		color: yellow;
+		display:flex;
+		justify-content:center;
+		align-items:center;
+	}
+	
+	
+	
+
+	.question .opened-true .full-screen-question {
+	  animation: animation 1000ms linear both;
+	}
+
+	
+	@keyframes animation { 
+	  0% { transform: matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  3.4% { transform: matrix3d(0.658, 0, 0, 0, 0, 0.703, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  4.7% { transform: matrix3d(0.725, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  6.81% { transform: matrix3d(0.83, 0, 0, 0, 0, 0.946, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  9.41% { transform: matrix3d(0.942, 0, 0, 0, 0, 1.084, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  10.21% { transform: matrix3d(0.971, 0, 0, 0, 0, 1.113, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  13.61% { transform: matrix3d(1.062, 0, 0, 0, 0, 1.166, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  14.11% { transform: matrix3d(1.07, 0, 0, 0, 0, 1.165, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  17.52% { transform: matrix3d(1.104, 0, 0, 0, 0, 1.12, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  18.72% { transform: matrix3d(1.106, 0, 0, 0, 0, 1.094, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  21.32% { transform: matrix3d(1.098, 0, 0, 0, 0, 1.035, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  24.32% { transform: matrix3d(1.075, 0, 0, 0, 0, 0.98, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  25.23% { transform: matrix3d(1.067, 0, 0, 0, 0, 0.969, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  29.03% { transform: matrix3d(1.031, 0, 0, 0, 0, 0.948, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  29.93% { transform: matrix3d(1.024, 0, 0, 0, 0, 0.949, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  35.54% { transform: matrix3d(0.99, 0, 0, 0, 0, 0.981, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  36.74% { transform: matrix3d(0.986, 0, 0, 0, 0, 0.989, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  41.04% { transform: matrix3d(0.98, 0, 0, 0, 0, 1.011, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  44.44% { transform: matrix3d(0.983, 0, 0, 0, 0, 1.016, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  52.15% { transform: matrix3d(0.996, 0, 0, 0, 0, 1.003, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  59.86% { transform: matrix3d(1.003, 0, 0, 0, 0, 0.995, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  63.26% { transform: matrix3d(1.004, 0, 0, 0, 0, 0.996, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  75.28% { transform: matrix3d(1.001, 0, 0, 0, 0, 1.002, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  85.49% { transform: matrix3d(0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  90.69% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
+	  100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
+	}
+</style>
+
+<body>
+	<div id="app">
+		<div class="row" v-for="(item, index) in items">
+			<div class="question">{{ item.n }}</div>
+			<questions :questions="item.q" />
+		</li>
+	</div>
+</body>
+
+<script>
+const json = [
+	{
+		n: 'PROG',
+		q: [
+			'KISS',
+			'YAGNI',
+			'IINYC',
+			'POLA',
+			'APO'
+		]
+	},
+	{
+		n: 'SOLID',
+		q: [
+			'SCP', 
+			'OCP',
+			'LSP',
+			'ISP',
+			'DIP'
+		]
+	},
+	{	
+		n: 'DESIGN',
+		q: [
+			'DMMT', 
+			'GFI',
+			'LIM',
+			'CIK',
+			'THE CAT'
+		]
+	},
+	{
+		n: 'WILEY',
+		q: [
+			'WPPAP',
+			'CDM',
+			'JPCMS',
+			'DSS',
+			'XDPS',
+		]
+	},
+	{
+		n: 'OTHER',
+		q: [
+			'MTFBWY',
+			'ELI5',
+			'DNCDIMP',
+			'ADIDAS',
+			'ROFLAOSTC'
+		]
+	}
+]
+
+Vue.component('question', {
+	template: '' +
+	'<div :class="(\'opened-\'+open.toString())" v-on:click="open = !open; clicked=1">' +
+			'<div class="full-screen-question">{{ q }}</div><div v-if="!clicked" class="price">{{ price }}</div>' +
+	'</div>',
+	props: {
+		q: {
+			type: String,
+			default: function() {
+				return '';
+			}
+		},
+		price: {
+			type: String,
+			default: function() {
+				return '';
+			}
+		}
+	},
+	data: function () {
+		return { open: false, clicked: false }
+	}
+});
+
+
+Vue.component('questions', {
+	template: '' +
+	'<ul class="questions">' +
+		'<li class="question" v-for="q, index in questions">' +
+			'<question :q="q" :price="(index+1)*100" />' +
+		'</li>' +
+	'</ul>',
+	props: {
+		questions: {
+			type: Array,
+			default: function() {
+				return [];
+			}
+		}
+	},
+});
+
+
+new Vue({
+    el: '#app',
+
+    data: {
+		items: json
+	}
+});
+
+</script>
