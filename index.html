@@ -1,3 +1,4 @@
+
 <script src="https://unpkg.com/vue"></script>
 
 <style>
@@ -29,7 +30,7 @@
 		list-style: none;
 	}
 	.question .opened-true .full-screen-question{
-		display: block;
+		display: flex;
 	}
 	.question .opened-false .full-screen-question{
 		display: none;
@@ -48,9 +49,10 @@
 		top: 0;
 		left: 0;
 		text-align: center;
-		padding-top: 30%;
+		justify-content:center;
+		align-items:center;
 	}
-	.question { 
+	.question {
 		border: 1px solid yellow;
 		font-family: arial;
 		color: yellow;
@@ -58,16 +60,16 @@
 		justify-content:center;
 		align-items:center;
 	}
-	
-	
-	
+
+
+
 
 	.question .opened-true .full-screen-question {
 	  animation: animation 1000ms linear both;
 	}
 
-	
-	@keyframes animation { 
+
+	@keyframes animation {
 	  0% { transform: matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 	  3.4% { transform: matrix3d(0.658, 0, 0, 0, 0, 0.703, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 	  4.7% { transform: matrix3d(0.725, 0, 0, 0, 0, 0.8, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
@@ -93,7 +95,7 @@
 	  75.28% { transform: matrix3d(1.001, 0, 0, 0, 0, 1.002, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 	  85.49% { transform: matrix3d(0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 	  90.69% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
-	  100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); } 
+	  100% { transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 	}
 </style>
 
@@ -121,17 +123,17 @@ const json = [
 	{
 		n: 'SOLID',
 		q: [
-			'SCP', 
+			'SCP',
 			'OCP',
 			'LSP',
 			'ISP',
 			'DIP'
 		]
 	},
-	{	
+	{
 		n: 'DESIGN',
 		q: [
-			'DMMT', 
+			'DMMT',
 			'GFI',
 			'LIM',
 			'CIK',
