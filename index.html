@@ -1,6 +1,4 @@
-
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
 <style>
 	* {
 		font-size:45px;
@@ -99,14 +97,16 @@
 	}
 </style>
 
+</head>
+
 <body>
-	<div id="app">
-		<div class="row" v-for="(item, index) in items">
-			<div class="question">{{ item.n }}</div>
-			<questions :questions="item.q" />
-		</li>
+
+<div id="app">
+	<div class="row" v-for="(item, index) in items">
+		<div class="question">{{ item.n }}</div>
+		<questions :questions="item.q"></questions>
 	</div>
-</body>
+</div>
 
 <script>
 const json = [
