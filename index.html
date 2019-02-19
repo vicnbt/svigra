@@ -1,3 +1,4 @@
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <style>
 	* {
@@ -59,11 +60,16 @@
 		align-items:center;
 	}
 
-
-
-
 	.question .opened-true .full-screen-question {
 	  animation: animation 1000ms linear both;
+	}
+	
+	.opened-true .choises {
+		position: absolute;
+		display: block;
+	}
+	.opened-false .choises {
+		display: none;
 	}
 
 
@@ -109,11 +115,15 @@
 </div>
 
 <script>
+//const participants = prompt().split(',')
+const participants = [{'a':0},{'b':0}];
+//alert(participants.length + ' added');
+
 const json = [
 	{
 		n: 'PROG',
 		q: [
-			'KISS',
+			{title:'KISS', choises:["test", "test2", "test3", "test4"], correct:0},
 			'YAGNI',
 			'IINYC',
 			'POLA',
@@ -162,11 +172,20 @@ const json = [
 	}
 ]
 
+
+let serverBus;
+
 Vue.component('question', {
-	template: '' +
-	'<div :class="(\'opened-\'+open.toString())" v-on:click="open = !open; clicked=1">' +
-			'<div class="full-screen-question">{{ q }}</div><div v-if="!clicked" class="price">{{ price }}</div>' +
-	'</div>',
+	template: `
+		<div :class="('opened-'+open.toString())" v-on:click="open = true; clicked=1">
+			<div class="full-screen-question">{{ q.title }}</div>
+			<ul class="choises">
+				<li class="choise" v-for="choise, index in q.choises">
+					<div @click="choose(choise, index, q.title, q.correct === index)">{{ choise }}</div>
+				</li>
+			</ul>
+			<div v-if="!clicked" class="price">{{ price }}</div>
+		</div>`,
 	props: {
 		q: {
 			type: String,
@@ -183,17 +202,22 @@ Vue.component('question', {
 	},
 	data: function () {
 		return { open: false, clicked: false }
+	},
+	methods: {
+		choose: function (choise, index, question, correct) {
+			serverBus.$emit('choose', choise, index, question, correct);
+		}
 	}
 });
 
 
 Vue.component('questions', {
-	template: '' +
-	'<ul class="questions">' +
-		'<li class="question" v-for="q, index in questions">' +
-			'<question :q="q" :price="(index+1)*100" />' +
-		'</li>' +
-	'</ul>',
+	template: `
+		<ul class="questions">
+			<li class="question" v-for="q, index in questions">
+				<question :q="q" :price="(index+1)*100" />
+			</li>
+		</ul>`,
 	props: {
 		questions: {
 			type: Array,
@@ -204,12 +228,15 @@ Vue.component('questions', {
 	},
 });
 
-
-new Vue({
+serverBus = new Vue({
     el: '#app',
-
     data: {
 		items: json
+	},
+	created() {
+		this.$on('choose', (choise, index, question, correct) => {
+			console.log('choise, index, question', choise, index, question, correct);
+		});
 	}
 });
 
