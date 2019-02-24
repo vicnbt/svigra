@@ -2,7 +2,9 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <style>
 	* {
-		font-size:45px;
+		font-size:2rem;
+		font-family: arial;
+		color: yellow;
 	}
 	body {
 		background: #6666ff;
@@ -10,8 +12,9 @@
 		padding: 0;
 	}
 	#app {
+		padding-top:100px;
 		display: grid;
-		grid-template-rows: repeat(5, 20%);
+		grid-template-rows: repeat(5, 17%);
 		height: 100%;
 	}
 	.questions {
@@ -24,7 +27,7 @@
 		grid-template-columns: 20% 80%;
 	}
 	ul {
-	    padding: 0;
+	    	padding: 0;
 		margin: 0;
 		list-style: none;
 	}
@@ -53,8 +56,6 @@
 	}
 	.question {
 		border: 1px solid yellow;
-		font-family: arial;
-		color: yellow;
 		display:flex;
 		justify-content:center;
 		align-items:center;
@@ -63,7 +64,7 @@
 	.question .opened-true .full-screen-question {
 	  animation: animation 1000ms linear both;
 	}
-	
+
 	.opened-true .choises {
 		position: absolute;
 		display: block;
@@ -71,8 +72,33 @@
 	.opened-false .choises {
 		display: none;
 	}
+	.choise div:hover {
+		cursor: pointer;
+		color: white;
+	}
 
-
+	.participants {
+		position: absolute;
+		right: 10px;
+		display: flex;
+		flex-direction: row;
+		z-index: 1;
+	}
+	.participant {
+		margin-left:10px
+	}
+	.participant:hover {
+		cursor: pointer;
+		color: white;
+	}
+	.participant:after {
+		content: " |"
+	}
+	.selected-participant {
+			font-weight: bold;
+			font-size: 2.5rem;
+			padding-right:100px
+	}
 	@keyframes animation {
 	  0% { transform: matrix3d(0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
 	  3.4% { transform: matrix3d(0.658, 0, 0, 0, 0, 0.703, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); }
@@ -103,141 +129,173 @@
 	}
 </style>
 
-</head>
-
 <body>
 
 <div id="app">
+	<participants
+		:selectedp="selectedp"
+		:participants="participants">
+  </participants>
 	<div class="row" v-for="(item, index) in items">
 		<div class="question">{{ item.n }}</div>
 		<questions :questions="item.q"></questions>
 	</div>
+
 </div>
 
 <script>
-//const participants = prompt().split(',')
-const participants = [{'a':0},{'b':0}];
-//alert(participants.length + ' added');
+const participants = prompt().split(',').map(user => ({ name: user, score: 0 }))
+alert(participants.length + ' added')
+// const participants = [
+// {name:'a', score: 3},
+// {name: 'b', score:2 },
+// {name: 'c', score:1 },
+// ]
 
-const json = [
+const appJson = [
 	{
 		n: 'PROG',
 		q: [
-			{title:'KISS', choises:["test", "test2", "test3", "test4"], correct:0},
-			'YAGNI',
-			'IINYC',
-			'POLA',
-			'APO'
+			{title:'1', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'2', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'3', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'4', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'5', choises:["test", "test2", "test3", "test4"], correct:0}
 		]
 	},
 	{
 		n: 'SOLID',
 		q: [
-			'SCP',
-			'OCP',
-			'LSP',
-			'ISP',
-			'DIP'
+			{title:'1', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'2', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'3', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'4', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'5', choises:["test", "test2", "test3", "test4"], correct:0}
 		]
 	},
 	{
 		n: 'DESIGN',
 		q: [
-			'DMMT',
-			'GFI',
-			'LIM',
-			'CIK',
-			'THE CAT'
+			{title:'1', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'2', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'3', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'4', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'5', choises:["test", "test2", "test3", "test4"], correct:0}
 		]
 	},
 	{
 		n: 'WILEY',
 		q: [
-			'WPPAP',
-			'CDM',
-			'JPCMS',
-			'DSS',
-			'XDPS',
+			{title:'1', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'2', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'3', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'4', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'5', choises:["test", "test2", "test3", "test4"], correct:0}
 		]
 	},
 	{
 		n: 'OTHER',
 		q: [
-			'MTFBWY',
-			'ELI5',
-			'DNCDIMP',
-			'ADIDAS',
-			'ROFLAOSTC'
+			{title:'1', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'2', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'3', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'4', choises:["test", "test2", "test3", "test4"], correct:0},
+			{title:'5', choises:["test", "test2", "test3", "test4"], correct:0}
 		]
 	}
 ]
 
-
-let serverBus;
+let serverBus
 
 Vue.component('question', {
 	template: `
-		<div :class="('opened-'+open.toString())" v-on:click="open = true; clicked=1">
-			<div class="full-screen-question">{{ q.title }}</div>
-			<ul class="choises">
-				<li class="choise" v-for="choise, index in q.choises">
-					<div @click="choose(choise, index, q.title, q.correct === index)">{{ choise }}</div>
-				</li>
-			</ul>
-			<div v-if="!clicked" class="price">{{ price }}</div>
-		</div>`,
+	<div :class="('opened-'+opened)" @click="opened = !opened; clicked = true">
+		<div class="full-screen-question">{{ q.title }}</div>
+		<ul class="choises">
+			<li class="choise" v-for="choise, index in q.choises">
+				<div @click="choose(choise, index, q.title, q.correct === index)">{{ choise }}</div>
+			</li>
+		</ul>
+		<div v-if="!clicked" class="price">{{ price }}</div>
+	</div>`,
 	props: {
-		q: {
-			type: String,
-			default: function() {
-				return '';
-			}
-		},
-		price: {
-			type: String,
-			default: function() {
-				return '';
-			}
-		}
+		q: { type: Object, default: () => '' },
+		price: { type: Number, default: () => 0	}
 	},
-	data: function () {
-		return { open: false, clicked: false }
-	},
+	data: () => ({ opened: false, clicked: false }),
 	methods: {
-		choose: function (choise, index, question, correct) {
-			serverBus.$emit('choose', choise, index, question, correct);
+		choose: (choise, index, question, correct) => {
+			serverBus.$emit('choose', choise, index, question, correct)
 		}
 	}
-});
-
+})
 
 Vue.component('questions', {
 	template: `
-		<ul class="questions">
-			<li class="question" v-for="q, index in questions">
-				<question :q="q" :price="(index+1)*100" />
-			</li>
-		</ul>`,
+	<ul class="questions">
+		<li class="question" v-for="q, index in questions">
+			<question :q="q" :price="(index+1)*100" />
+		</li>
+	</ul>`,
 	props: {
-		questions: {
-			type: Array,
-			default: function() {
-				return [];
-			}
+		questions: { type: Array, default: () => [] },
+	},
+})
+
+Vue.component('participants', {
+	computed: {
+		sortedArray: function() {
+			return this.participants.sort((a, b) => {
+				if (a.score < b.score) return 1
+				if (a.score > b.score) return -1
+				                       return 0
+			})
 		}
 	},
-});
+	template: `
+	<div class="participants">
+		<div class="selected-participant">{{ selectedp }}</div>
+		<div v-for="(item, index) in sortedArray">
+			<div class="participant" @click="select(item.name)">{{ item.name }} : {{ item.score }}</div>
+		</div>
+	</div>`,
+	props: {
+		selectedp: {type: String, default: () => '' },
+		participants: {	type: Array, default: () => [] }
+	},
+	methods: {
+		select: (participantName) =>
+			serverBus.$emit('select-user', participantName)
+	}
+})
 
 serverBus = new Vue({
-    el: '#app',
-    data: {
-		items: json
+  el: '#app',
+	data: {
+	  items: appJson,
+	  participants: participants,
+		selectedp: ''
 	},
 	created() {
-		this.$on('choose', (choise, index, question, correct) => {
-			console.log('choise, index, question', choise, index, question, correct);
-		});
-	}
-});
+			this.$on('choose', (choise, index, question, correct) => {
+				if(this.selectedp){
+					const newParticipants = this.participants.map(participant => {
+						let score = participant.score
+						if(participant.name === this.selectedp) {
+							score = participant.score + (correct?1:-1)*(index+1)*100
+						}
+						return { name: participant.name, score: score }
+					})
+
+					this.participants = newParticipants;
+					this.selectedp = ''
+				}
+			})
+			this.$on('select-user', (participantName) => {
+				this.selectedp = participantName
+				console.log('participantName', participantName)
+			})
+		}
+})
 
 </script>
