@@ -184,7 +184,7 @@
   </participants>
 	<div class="row" v-for="(item, index) in items">
 		<div class="question">{{ item.n }}</div>
-		<questions :questions="item.q"></questions>
+		<questions :questions="item.q" :selectedp="selectedp"></questions>
 	</div>
 
 </div>
@@ -255,7 +255,7 @@ let serverBus
 
 Vue.component('question', {
 	template: `
-	<div :class="('opened-'+opened)" @click="opened = !opened; clicked = true">
+	<div :class="('opened-'+opened)" @click="opened = !opened; selectedp && (clicked = true)">
 		<div class="full-screen-question">{{ q.title }}</div>
 		<ul class="choises">
 			<li class="choise" v-for="choise, index in q.choises">
@@ -265,6 +265,7 @@ Vue.component('question', {
 		<div v-if="!clicked" class="price">{{ price }}</div>
 	</div>`,
 	props: {
+		selectedp: {type: String, default: () => '' },
 		q: { type: Object, default: () => '' },
 		price: { type: Number, default: () => 0	}
 	},
@@ -280,10 +281,11 @@ Vue.component('questions', {
 	template: `
 	<ul class="questions">
 		<li class="question" v-for="q, index in questions">
-			<question :q="q" :price="(index+1)*100" />
+			<question :q="q" :selectedp="selectedp" :price="(index+1)*100" />
 		</li>
 	</ul>`,
 	props: {
+		selectedp: {type: String, default: () => '' },
 		questions: { type: Array, default: () => [] },
 	},
 })
