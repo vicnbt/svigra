@@ -256,7 +256,7 @@ let serverBus
 
 Vue.component('question', {
 	template: `
-	<div :class="('opened-'+opened)" @click="opened = !opened; selectedp && (clicked = true)">
+	<div :class="('opened-'+opened)" @click="opened = !opened; clicked = true">
 		<div class="full-screen-question">{{ q.title }}</div>
 		<ul class="choises">
 			<li class="choise" v-for="choise, index in q.choises">
