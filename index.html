@@ -259,11 +259,11 @@ Vue.component('question', {
 	<div :class="('opened-'+opened)" @click="opened = !opened; clicked = true">
 		<div class="full-screen-question">{{ q.title }}</div>
 		<ul class="choises">
-			<li class="choise" v-for="choise, index in q.choises">
-				<div @click="choose(choise, index, q.title, q.correct === index)">{{ choise }}</div>
+			<li class="choise" v-for="choise, choiseIndex in q.choises">
+				<div @click="choose(choise, price, q.title, q.correct === choiseIndex)">{{ choise }}</div>
 			</li>
 		</ul>
-		<div v-if="!clicked" class="price">{{ price }}</div>
+		<div v-if="(!clicked)" class="price">{{ price }}</div>
 	</div>`,
 	props: {
 		selectedp: {type: String, default: () => '' },
@@ -326,12 +326,13 @@ serverBus = new Vue({
 		selectedp: ''
 	},
 	created() {
-			this.$on('choose', (choise, index, question, correct) => {
+			this.$on('choose', (choise, price, question, correct) => {
+				console.log('choise, price, question, correct', { choise, price, question, correct });
 				if(this.selectedp){
 					const newParticipants = this.participants.map(participant => {
 						let score = participant.score
 						if(participant.name === this.selectedp) {
-							score = participant.score + (correct?1:-1)*(index+1)*100
+							score = participant.score + (correct?1:-1)*price
 						}
 						return { name: participant.name, score: score }
 					})
